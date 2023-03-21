@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+      "lib": [
+        "ESNext"
+      ],
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "target": "ESNext",
+      "outDir": "out",
+      "sourceMap": false,
+      "esModuleInterop": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "allowSyntheticDefaultImports": true,
+      "skipLibCheck": true,
+      "skipDefaultLibCheck": true,
+      "resolveJsonModule": true,
+      "importHelpers": true,
+      "baseUrl": "./",
+      "paths": {
+        "@lib/*": [
+          "src/lib/*"
+        ]
+      },
+    },
+    "include": [
+      "src"
+    ],
+    "exclude": [
+      "node_modules",
+      "**/*.spec.ts"
+    ]
+  }
