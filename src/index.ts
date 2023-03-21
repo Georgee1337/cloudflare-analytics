@@ -22,7 +22,7 @@ app.get('/', async (req, res) => {
         setTimeout(() => reject(new Error('Request timeout')), REQ_TIMEOUT)
       ),
     ]);
-
+    console.log('value', value)
     if (value && !isEmpty(value)) CACHE = value;
 
     if (!isEmpty(CACHE)) {

@@ -135,13 +135,12 @@ const getQuarterKey = (key: string): string => {
 export const analytics = async () => {
     const now = new Date();
     const timestamp = subMonths(now, Number(HISTORY_MONTHS));
-    const date = format(timestamp, 'yyyy-MM-dd');
     const limit = differenceInDays(now, timestamp);
 
     const query = `{
       viewer {
         zones(filter: {zoneTag: "${ZONE_ID}"}) {
-          httpRequests1dGroups(orderBy:[date_DESC] limit: ${limit}, filter: { date_gt: "${date}" }) {
+          httpRequests1dGroups(orderBy:[date_DESC] limit: ${limit}, filter: { date_gt: "2022-12-21" }) {
             dimensions {
               date
             }
@@ -160,23 +159,7 @@ export const analytics = async () => {
         .post(
             "https://api.cloudflare.com/client/v4/graphql",
             {
-                query: `{
-          viewer {
-            zones(filter: {zoneTag: ${ZONE_ID}}}) {
-              httpRequests1dGroups(orderBy:[date_DESC] limit: 90, filter: { date_gt: "2022-12-21" }) {
-                dimensions {
-                  date
-                }
-                sum {
-                  requests
-                  cachedRequests
-                  bytes
-                  cachedBytes
-                }
-              }
-            }
-          }
-        }`,
+                query: query,
             },
             {
                 headers: {
@@ -187,7 +170,7 @@ export const analytics = async () => {
             }
         )
     const body: any = data;
-
+    console.log(body)
     const [{ httpRequests1dGroups }] = body.data.viewer.zones;
 
     const byDay = httpRequests1dGroups.reduce((acc: Record<string, Reqs & Bytes>, item: any, index: number) => {
