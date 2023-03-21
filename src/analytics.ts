@@ -170,7 +170,6 @@ export const analytics = async () => {
             }
         )
     const body: any = data;
-    console.log(body)
     const [{ httpRequests1dGroups }] = body.data.viewer.zones;
 
     const byDay = httpRequests1dGroups.reduce((acc: Record<string, Reqs & Bytes>, item: any, index: number) => {
