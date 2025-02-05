@@ -26,3 +26,10 @@ This repository contains a Cloudflare Analytics project inspired by [microlinkhq
 
 The server will start listening on the specified port (default is 3000). You can then access the analytics data by sending an HTTP request to the server.
 
+## Updates
+- Reduced data transfer and improved efficiency by removing unnecessary filters.
+- Replaced multiple .reduce() calls with a single pass for faster computations.
+- Implemented in-memory caching to reduce redundant API calls.
+- Used Map instead of objects for better lookup efficiency.
+- Simplified date manipulation with getPeriodKey() to remove unnecessary functions.
+- Avoided deep object copies to optimize memory usage.
