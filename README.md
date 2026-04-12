@@ -20,11 +20,25 @@ This repository contains a Cloudflare Analytics project inspired by [microlinkhq
     X_AUTH_KEY=your_auth_key
     HISTORY_MONTHS=3
     MAX_CACHE=86400
+    REQ_TIMEOUT_MS=8000
+    PORT=3000
     ```
 
     Replace `your_zone_id`, `your_auth_email`, and `your_auth_key` with your actual Cloudflare credentials.
 
 The server will start listening on the specified port (default is 3000). You can then access the analytics data by sending an HTTP request to the server.
+
+## API
+- `GET /` returns all analytics buckets (`byDay`, `byMonth`, `byQuarter`).
+- `GET /?period=day|month|quarter|all` limits the payload to a single aggregation level.
+- `GET /?includeMeta=true` wraps the response with cache metadata (`cacheStatus`, `fetchedAt`, `expiresAt`).
+- `GET /health` returns a lightweight health check with current cache state.
+
+## Runtime improvements
+- Validates required Cloudflare credentials at startup instead of failing later on the first request.
+- Enforces upstream request timeouts and surfaces Cloudflare GraphQL errors clearly.
+- Uses expiring in-memory cache entries with stale-data fallback when Cloudflare is temporarily unavailable.
+- Aligns the TypeScript build output with the runtime entrypoint in `package.json`.
 
 ## Updates
 - Reduced data transfer and improved efficiency by removing unnecessary filters.
